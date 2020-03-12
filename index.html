@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+    <!-- Webpage Title -->
+    <title>Shoppingmall</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <!-- Google Font : Do Hyeon -->
+    <link href="https://fonts.googleapis.com/css?family=Black+Han+Sans&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            font-family: 'Black Han Sans', sans-serif;
+        }
+
+        /* Block of the same size -> Left alignment */
+        .box {
+            width: 550px;
+            display: block;
+            margin: 10px auto;
+        }
+
+        .font-h1 {
+            font-size: xx-large
+        }
+
+        .font-h5 {
+            font-size: medium;
+        }
+
+        /* Flex class -> Central alignment */
+        .box-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: auto auto 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 상품 사진 -->
+    <img class="box" src="https://ccimg.hellomarket.com/images/2019/item/10/07/07/2405_1773432_1.jpg?size=s6">
+
+    <!-- 상품 제목 / 가격 -->
+    <span class="box">
+        <span class="font-h1">MacBook 팝니다 </span>
+        <span class="font-h5"> 가격:1,000,000원 / 개</span>
+    </span>
+
+    <!-- 상품 내용 -->
+    <div class="box">
+        <p>언박싱은 아니지만... 딱 일주일 사용해서 거의 새제품이나 다름없는 맥북입니다. 상태는 당연히 최상급이구요~ 구매의사 있으시면 연락주세요!! (3대 보유중)</p>
+    </div>
+
+    <div class="box">
+        <!-- 주문자 성함 -->
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">주문자 이름</span>
+            </div>
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+        </div>
+
+        <!-- 수량 -->
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">수량</label>
+            </div>
+            <select class="custom-select" id="inputGroupSelect01">
+                <option selected>-- 수량을 선택하세요 --</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+        </div>
+
+
+        <!-- 주소 -->
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">주소</span>
+            </div>
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+        </div>
+
+
+        <!-- 전화번호 -->
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">전화번호</span>
+            </div>
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+        </div>
+    </div>
+
+    <!-- 주문하기 버튼 -->
+    <div class="box-center">
+        <a class="btn btn-primary" href="#" role="button">주문하기</a>
+    </div>
+
+</body>
+
+</html>
