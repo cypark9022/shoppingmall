@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko">
 
 <head>
 
@@ -55,6 +55,55 @@
             margin: auto auto 50px;
         }
     </style>
+
+    <script>
+        function order() {
+            // 입력값을 변수에 저장
+            let name = $('#input-name').val()
+            let amount = $('#input-amount').val()
+            let address = $('#input-address').val()
+            let phone = $('#input-phone').val()
+
+            // 입력 X -> alert + focus
+            if (name == "") {
+                alert("주문자 이름을 입력해주세요!")
+                $('#input-name').focus()
+            }
+            else if (amount == "-- 수량을 선택하세요 --") {
+                alert("수량을 입력해주세요!")
+                $('#input-amount').focus()
+            }
+            else if (address == "") {
+                alert("주소를 입력해주세요!")
+                $('#input-address').focus()
+            }
+            else if (phone == "") {
+                alert("전화번호를 입력해주세요!")
+                $('#input-phone').focus()
+            }
+            // 입력 O -> 리스트에 입력값을 추가
+            else {
+                $('#order-list').append('<tr>')
+                $('#order-list').append('<th scope="row">' + name + '</th>')
+                $('#order-list').append('<td>' + amount + '</td>')
+                $('#order-list').append('<td>' + address + '</td>')
+                $('#order-list').append('<td>' + phone + '</td>')
+                $('#order-list').append('</tr>')
+
+                // 입력값 초기화
+                $('#input-name').val('')
+                $('#input-amount').val('-- 수량을 선택하세요 --')
+                $('#input-address').val('')
+                $('#input-phone').val('')
+            }
+        }
+
+        function order_rm() {
+            // 리스트 초기화
+            $('#order-list').empty('')
+        }
+    </script>
+
 </head>
 
 <body>
@@ -64,12 +113,12 @@
     <!-- 상품 제목 / 가격 -->
     <span class="box">
         <span class="font-h1">MacBook 팝니다 </span>
-        <span class="font-h5"> 가격:1,000,000원 / 개</span>
+        <span class="font-h5"> 가격:1,200,000원 / 개</span>
     </span>
 
     <!-- 상품 내용 -->
     <div class="box">
-        <p>언박싱은 아니지만... 딱 일주일 사용해서 거의 새제품이나 다름없는 맥북입니다. 상태는 당연히 최상급이구요~ 구매의사 있으시면 연락주세요!! (3대 보유중)</p>
+        <p>언박싱은 아니지만... 딱 일주일 사용해서 거의 새제품이나 다름없는 맥북입니다. 상태는 당연히 최상급이구요~ 반품은 일주일 이내에만 가능하니 신중하게 주문 해주세요!</p>
     </div>
 
     <div class="box">
@@ -78,7 +127,8 @@
             <div class="input-group-prepend">
                 <span class="input-group-text" id="inputGroup-sizing-default">주문자 이름</span>
             </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+            <input id="input-name" type="text" class="form-control" aria-label="Default"
+                aria-describedby="inputGroup-sizing-default">
         </div>
 
         <!-- 수량 -->
@@ -86,7 +136,7 @@
             <div class="input-group-prepend">
                 <label class="input-group-text" for="inputGroupSelect01">수량</label>
             </div>
-            <select class="custom-select" id="inputGroupSelect01">
+            <select id="input-amount" class="custom-select" id="inputGroupSelect01">
                 <option selected>-- 수량을 선택하세요 --</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -100,7 +150,8 @@
             <div class="input-group-prepend">
                 <span class="input-group-text" id="inputGroup-sizing-default">주소</span>
             </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+            <input id="input-address" type="text" class="form-control" aria-label="Default"
+                aria-describedby="inputGroup-sizing-default">
         </div>
 
 
@@ -109,13 +160,35 @@
             <div class="input-group-prepend">
                 <span class="input-group-text" id="inputGroup-sizing-default">전화번호</span>
             </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+            <input id="input-phone" type="text" class="form-control" aria-label="Default"
+                aria-describedby="inputGroup-sizing-default">
         </div>
     </div>
 
     <!-- 주문하기 버튼 -->
     <div class="box-center">
-        <a class="btn btn-primary" href="#" role="button">주문하기</a>
+        <span>
+            <a onclick="order()" class="btn btn-primary" href="#" role="button">주문하기</a>
+            <a onclick="order_rm()" class="btn btn-warning" href="#" role="button">전체삭제</a>
+        </span>
+    </div>
+
+    <!-- 주문한 리스트 -->
+    <div class="box">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">이름</th>
+                    <th scope="col">수량</th>
+                    <th scope="col">주소</th>
+                    <th scope="col">전화번호</th>
+                </tr>
+            </thead>
+            <!-- row data table -->
+            <tbody id="order-list">
+
+            </tbody>
+        </table>
     </div>
 
 </body>
