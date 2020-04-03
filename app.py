@@ -8,7 +8,7 @@ db = client.shoppingmall                  # 'shoppingmall'라는 이름의 db를
 ## HTML을 주는 부분
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('shoppingmall.html')
 
 ## API 역할을 하는 부분
 ## POST 형식으로 입력된 데이터를 전송할 경우, DB에 딕셔너리 형태로 저장
