@@ -2,7 +2,6 @@
 <html lang="ko">
 
 <head>
-
     <!-- Webpage Title -->
     <title>Shoppingmall</title>
 
@@ -56,31 +55,41 @@
         }
     </style>
 
-    <script>
-        function order() {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#order-list').html('');
+            listing();
+        });
+
+        function order_make() {
             // 입력값을 변수에 저장
             let name = $('#input-name').val()
             let amount = $('#input-amount').val()
             let address = $('#input-address').val()
             let phone = $('#input-phone').val()
 
-            // 입력 X -> alert + focus
+            // 입력값이 없을 경우, alert + focus 설정
             if (name == "") {
                 alert("주문자 이름을 입력해주세요!")
                 $('#input-name').focus()
+                return
             }
             else if (amount == "-- 수량을 선택하세요 --") {
                 alert("수량을 입력해주세요!")
                 $('#input-amount').focus()
+                return
             }
             else if (address == "") {
                 alert("주소를 입력해주세요!")
                 $('#input-address').focus()
+                return
             }
             else if (phone == "") {
                 alert("전화번호를 입력해주세요!")
                 $('#input-phone').focus()
+                return
             }
+<<<<<<< Updated upstream:shoppingmall.html
             // 입력 O -> 리스트에 입력값을 추가
             else {
                 // 전화번호 입력 정규식 사용 -> (-)형식
@@ -103,13 +112,81 @@
                 $('#input-amount').val('-- 수량을 선택하세요 --')
                 $('#input-address').val('')
                 $('#input-phone').val('')
+=======
+
+            // 휴대폰번호에 정규표현식 적용 (***-****-****)
+            let patt = new RegExp("[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}")
+            if (!patt.test($("#input-phone").val())) {
+                alert("전화번호를 (***-****-****) 형식으로 입력해주세요!")
+                return false
+>>>>>>> Stashed changes:templates/shoppingmall.html
             }
+
+            // orders 경로로 POST 요청 (data를 api형식에 맞게 설정)
+            $.ajax({
+                type: 'POST',
+                url: '/orders',
+                data: { 'name_give': name, 'amount_give': amount, 'address_give': address, 'phone_give': phone },
+                success: function (response) {
+                    if (response['result'] == 'success') {
+                        alert(response['msg']);
+                        window.location.reload();
+                    }
+                }
+            });
         }
 
         function order_rm() {
-            // 리스트 초기화
+            // 화면에 보여지는 리스트 삭제
             $('#order-list').empty('')
+
+            // DB 데이터 삭제 (새로고침 후에도 전체삭제)
+            $.ajax({
+                type: "POST",
+                url: "/delete",
+                success: function (response) {
+                    if (response['result'] == 'success') {
+                        alert(response['msg']);
+                    }
+                }
+            });
         }
+
+        // orders 경로로 GET 요청
+        function listing() {
+            $.ajax({
+                type: "GET",
+                url: "/orders",
+                data: {},
+                success: function (response) {
+                    if (response['result'] == 'success') {
+                        let orders = response['orders']
+                        // 정상일 때 데이터를 순서대로 화면에 출력
+                        for (let i = 0; i < orders.length; i++) {
+                            let name = orders[i]['name']
+                            let amount = orders[i]['amount']
+                            let address = orders[i]['address']
+                            let phone = orders[i]['phone']
+                            make_table(name, amount, address, phone)
+                        }
+                    } else {
+                        alert('데이터를 받아오지 못했습니다');
+                    }
+                }
+            });
+        }
+
+        // DB에서 가져온 data를 화면에 출력
+        function make_table(name, amount, address, phone) {
+            let temp_list = '<tr>\
+                            <th scope="row">' + name + '</th>\
+                            <td>' + amount + '</td>\
+                            <td>' + address + '</td>\
+                            <td>' + phone + '</td>\
+                            </tr>';
+            $('#order-list').append(temp_list)
+        }
+
     </script>
 
 </head>
@@ -152,7 +229,6 @@
             </select>
         </div>
 
-
         <!-- 주소 -->
         <div class="input-group mb-3">
             <div class="input-group-prepend">
@@ -162,14 +238,18 @@
                 aria-describedby="inputGroup-sizing-default">
         </div>
 
-
         <!-- 전화번호 -->
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="inputGroup-sizing-default">전화번호</span>
             </div>
+<<<<<<< Updated upstream:shoppingmall.html
             <input id="input-phone" name="input-phone" type="text" class="form-control"
                 aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="***-****-****"
+=======
+            <input id="input-phone" name="input-phone" type="text" class="form-control" aria-label="Default"
+                aria-describedby="inputGroup-sizing-default" placeholder="***-****-****"
+>>>>>>> Stashed changes:templates/shoppingmall.html
                 pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}" maxlength="13">
         </div>
     </div>
@@ -177,12 +257,12 @@
     <!-- 주문하기 버튼 -->
     <div class="box-center">
         <span>
-            <a onclick="order()" class="btn btn-primary" href="#" role="button">주문하기</a>
+            <a onclick="order_make()" class="btn btn-primary" href="#" role="button">주문하기</a>
             <a onclick="order_rm()" class="btn btn-warning" href="#" role="button">전체삭제</a>
         </span>
     </div>
 
-    <!-- 주문한 리스트 -->
+    <!-- 주문 리스트 -->
     <div class="box">
         <table class="table">
             <thead class="thead-dark">
@@ -193,7 +273,7 @@
                     <th scope="col">전화번호</th>
                 </tr>
             </thead>
-            <!-- row data table -->
+            <!-- DB data -->
             <tbody id="order-list">
 
             </tbody>
